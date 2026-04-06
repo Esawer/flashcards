@@ -1,1 +1,1 @@
-web: gunicorn flashcards_app.wsgi
+web: gunicorn flashcards_app.wsgi --bind 0.0.0.0:$PORT
