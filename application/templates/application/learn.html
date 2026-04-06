@@ -1,0 +1,53 @@
+{% extends "application/main.html" %}
+
+{%block content%}
+
+
+<div class="mt-10 perspective-[1000px] group mx-auto items-center justify-center relative gap-5 text-2xl w-72 h-108 hover:rotate-y-180 ease-out delay-250 duration-700 transform-3d">
+
+<div class="backface-hidden absolute  items-center justify-center h-full w-full rounded-xl border border-zinc-400 bg-linear-to-t from-zinc-800 via-zinc-900 to-zinc-900">
+<div class="border-b p-3 flex space-bet">
+  <p class="mr-auto">{{deck.name}}</p>
+  <p >{{card_num}} / {{deck_len}}</p>
+</div>
+<p class="text-center mt-7 text-wrap whitespace-normal wrap-break-words leading-relaxed">{{question}}</p>
+</div>
+
+<div class="rotate-y-180  backface-hidden absolute  items-center justify-center h-full w-full rounded-xl border border-zinc-400 bg-linear-to-t from-zinc-800 via-zinc-900 to-zinc-900">
+<div class="border-b p-3 flex space-bet">
+  <p class="mr-auto">{{deck.name}}</p>
+  <p >{{card_num}} / {{deck_len}}</p>
+</div>
+<p class="text-center mt-7 text-wrap whitespace-normal wrap-break-words leading-relaxed">{{answer}}</p>
+</div>
+
+</div>
+
+
+<div class="flex items-center flex-col gap-2 p-5">
+
+<div class="flex gap-5 mt-5">
+    
+
+<a  class="text-2xl border border-zinc-600 text-amber-50  bg-gray-900 p-3 rounded-2xl min-h-5 transition hover:scale-120 ease-out delay-100 duration-300" href="{% url 'learn' deck.id previous_item %}">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+  <path fill-rule="evenodd" d="M11.03 3.97a.75.75 0 0 1 0 1.06l-6.22 6.22H21a.75.75 0 0 1 0 1.5H4.81l6.22 6.22a.75.75 0 1 1-1.06 1.06l-7.5-7.5a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+</svg>
+
+</a>
+
+
+<a class="text-2xl border border-zinc-600 text-amber-50 bg-gray-900 p-3 rounded-2xl transition hover:scale-120 ease-out delay-100 duration-300" href="{% url 'learn' deck.id next_item %}">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+  <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+</svg>
+
+</a>
+
+</div>
+
+<a class="text-2xl border border-zinc-600 text-amber-50 mt-1 bg-gray-900 p-3 pr-5 pl-5 rounded-2xl transition hover:scale-110 ease-out delay-100 duration-300" href="{% url 'home' %}">Finish</a>
+
+</div>
+
+{% endblock %}

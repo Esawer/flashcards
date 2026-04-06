@@ -1,0 +1,30 @@
+{% extends "application/main.html" %}
+
+{%block content%}
+
+    
+<div class="flex flex-wrap justify-center w-full gap-3.5 max-w-[97vw]">
+    
+
+{% for i in decks %}
+
+
+<div class="text-center aspect-2/3 rounded-xl text-2xl transition hover:scale-105 hover:border-zinc-400 ease-in-out duration-300 delay-75 w-42 h-64 border border-zinc-700 bg-linear-to-t from-zinc-800 via-zinc-900 to-zinc-900 ">
+{% if i.card_set.count %}
+    {% if not i.sub_name %}
+        <a class="text-center justify-center truncate p-5 flex w-full h-full" href="{% url 'learn' i.id 0 %}"><span class="truncate">{{i.name}}</span></a>
+    {% else %}
+        <a class="text-center justify-center truncate p-5 flex w-full h-full" href="{% url 'learn' i.id 0 %}"><span class="truncate">{{i.name}}<br><br>{{i.sub_name}}</span></a>
+    {% endif %}
+{% else %}
+    <a class="text-center justify-center truncate p-5 flex w-full h-full cursor-pointer text-gray-500" href="{% url 'update_deck' i.id %}"><span class="truncate">{{i.name}}<br><br>{{i.sub_name}}</span></a>
+{% endif %}
+</div>
+
+
+
+{% endfor %} 
+
+</div>
+
+{% endblock %}
