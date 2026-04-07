@@ -57,113 +57,143 @@ def edit_deck(request):
     if not request.user.is_authenticated:
         return redirect("home")
 
-    deck = Deck.objects.filter(owner__user=request.user)
+    try:
+        deck = Deck.objects.filter(owner__user=request.user)
 
-    if request.method == "POST":
-        Deck.objects.get(id=request.POST["submit"]).delete()
+        if request.method == "POST":
+            Deck.objects.get(id=request.POST["submit"]).delete()
 
-    context = {"deck": deck}
-    return render(request, "application/edit_deck.html", context)
+        context = {"deck": deck}
+        return render(request, "application/edit_deck.html", context)
+
+    except Exception:
+        return redirect("home")
 
 
 def update_deck(request, id_deck):
     if not request.user.is_authenticated:
         return redirect("home")
 
-    deck = Deck.objects.get(id=id_deck)
-    deck_len = deck.card_set.all().count()  # type: ignore
+    try:
 
-    if request.method == "POST":
-        Card.objects.get(id=request.POST["submit"]).delete()
+        deck = Deck.objects.get(id=id_deck, owner__user=request.user)
+        deck_len = deck.card_set.all().count()  # type: ignore
 
-    context = {"deck": deck, "deck_len": deck_len}
-    return render(request, "application/update_deck.html", context)
+        if request.method == "POST":
+            Card.objects.get(id=request.POST["submit"]).delete()
+
+        context = {"deck": deck, "deck_len": deck_len}
+        return render(request, "application/update_deck.html", context)
+
+    except Exception:
+        return redirect("edit_deck")
 
 
 def update_card(request, id_deck, id_card):
     if not request.user.is_authenticated:
         return redirect("home")
 
-    deck = Deck.objects.get(id=id_deck)
-    card = deck.card_set.get(id=id_card)  # type: ignore
-    form = EditCard(initial={"question": card.question, "answer": card.answer})
+    try:
 
-    if request.method == "POST":
-        form = EditCard(request.POST, instance=card)
-        form.save()
-        return redirect("update_deck", id_deck)
+        deck = Deck.objects.get(id=id_deck, owner__user=request.user)
+        card = deck.card_set.get(id=id_card)  # type: ignore
+        form = EditCard(initial={"question": card.question, "answer": card.answer})
 
-    context = {"deck": deck, "card": card, "form": form}
-    return render(request, "application/update_card.html", context)
+        if request.method == "POST":
+            form = EditCard(request.POST, instance=card)
+            form.save()
+            return redirect("update_deck", id_deck)
+
+        context = {"deck": deck, "card": card, "form": form}
+        return render(request, "application/update_card.html", context)
+
+    except Exception:
+        return redirect("update_deck", id_deck=id_deck)
 
 
 def add_card(request, id_deck):
     if not request.user.is_authenticated:
         return redirect("home")
 
-    deck = Deck.objects.get(id=id_deck)
-    form = EditCard()
+    try:
 
-    if request.method == "POST":
-        form = EditCard(request.POST)
-        deck_value = form.save(commit=False)
-        deck_value.deck = Deck.objects.get(id=id_deck)
-        deck_value.save()
-        return redirect("update_deck", id_deck)
+        deck = Deck.objects.get(id=id_deck, owner__user=request.user)
+        form = EditCard()
 
-    context = {"deck": deck, "form": form}
-    return render(request, "application/add_card.html", context)
+        if request.method == "POST":
+            form = EditCard(request.POST)
+            deck_value = form.save(commit=False)
+            deck_value.deck = Deck.objects.get(id=id_deck)
+            deck_value.save()
+            return redirect("update_deck", id_deck)
+
+        context = {"deck": deck, "form": form}
+        return render(request, "application/add_card.html", context)
+
+    except Exception:
+        return redirect("edit_deck")
 
 
 def learn(request, id_deck, id_card):
-    deck = Deck.objects.get(id=id_deck)
-    deck_len = deck.card_set.all().count()  # type: ignore
 
-    if deck_len == id_card:
-        next_item = deck_len - 1
-        id_card = deck_len - 1
-        # return redirect('home')
-    else:
-        next_item = id_card + 1
+    try:
 
-    if 0 == id_card:
-        previous_item = id_card
-    else:
-        previous_item = id_card - 1
+        deck = Deck.objects.get(id=id_deck, owner__user=request.user)
+        deck_len = deck.card_set.all().count()  # type: ignore
 
-    card = deck.card_set.all()[id_card]  # type: ignore
-    question = deck.card_set.all()[id_card].question  # type: ignore
-    answer = deck.card_set.all()[id_card].answer  # type: ignore
+        if deck_len == id_card:
+            next_item = deck_len - 1
+            id_card = deck_len - 1
+            # return redirect('home')
+        else:
+            next_item = id_card + 1
 
-    context = {
-        "deck": deck,
-        "card": card,
-        "next_item": next_item,
-        "previous_item": previous_item,
-        "deck_len": deck_len,
-        "question": question,
-        "answer": answer,
-        "card_num": id_card + 1,
-    }
+        if 0 == id_card:
+            previous_item = id_card
+        else:
+            previous_item = id_card - 1
 
-    return render(request, "application/learn.html", context)
+        card = deck.card_set.all()[id_card]  # type: ignore
+        question = deck.card_set.all()[id_card].question  # type: ignore
+        answer = deck.card_set.all()[id_card].answer  # type: ignore
+
+        context = {
+            "deck": deck,
+            "card": card,
+            "next_item": next_item,
+            "previous_item": previous_item,
+            "deck_len": deck_len,
+            "question": question,
+            "answer": answer,
+            "card_num": id_card + 1,
+        }
+
+        return render(request, "application/learn.html", context)
+
+    except:
+        return redirect("home")
 
 
 def update_deck_info(request, id_deck):
     if not request.user.is_authenticated:
         return redirect("home")
 
-    deck = Deck.objects.get(id=id_deck)
-    form = AddDeck(initial={"name": deck.name})
+    try:
 
-    if request.method == "POST":
-        form = AddDeck(request.POST, instance=deck)
-        form.save()
-        return redirect("update_deck", id_deck)
+        deck = Deck.objects.get(id=id_deck)
+        form = AddDeck(initial={"name": deck.name})
 
-    context = {"deck": deck, "form": form}
+        if request.method == "POST":
+            form = AddDeck(request.POST, instance=deck)
+            form.save()
+            return redirect("update_deck", id_deck)
 
-    return render(request, "application/update_deck_settings.html", context)
+        context = {"deck": deck, "form": form}
+
+        return render(request, "application/update_deck_settings.html", context)
+
+    except Exception:
+        return redirect("home")
 
 
 @never_cache
