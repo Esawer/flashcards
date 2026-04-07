@@ -137,8 +137,10 @@ def add_card(request, id_deck):
 def learn(request, id_deck, id_card):
 
     try:
-
-        deck = Deck.objects.get(id=id_deck, owner__user=request.user)
+        if request.user == None:
+            deck = Deck.objects.get(id=id_deck)
+        else:
+            deck = Deck.objects.get(id=id_deck, owner__user=request.user)
         deck_len = deck.card_set.all().count()  # type: ignore
 
         if deck_len == id_card:
