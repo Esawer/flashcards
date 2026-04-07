@@ -1,1 +1,1 @@
-web: gunicorn flashcards_app.wsgi --bind 0.0.0.0:$PORT
+web: python manage.py migrate && gunicorn flashcards_app.wsgi --bind 0.0.0.0:$PORT
