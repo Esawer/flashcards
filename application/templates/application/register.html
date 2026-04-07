@@ -28,7 +28,7 @@
         <img class="border-2 border-zinc-200 rounded-md m-1" src="{% url 'captcha_img' %}">
         <p class="text-lg mt-4"><a href="{% url "login_page" %}">You already have an account - Login here</a>.
         {% if form.errors %}
-        Error
+        <br> Error - try again.
         {% endif %}
         </p>
     

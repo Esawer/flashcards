@@ -137,7 +137,7 @@ def add_card(request, id_deck):
 def learn(request, id_deck, id_card):
 
     try:
-        if request.user == None:
+        if not request.user.is_authenticated:
             deck = Deck.objects.get(id=id_deck)
         else:
             deck = Deck.objects.get(id=id_deck, owner__user=request.user)
