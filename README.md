@@ -27,7 +27,7 @@ Asystowała mi przy tworzeniu projektu - w tym hostingu.
 4. Tryb Nauki: Tryb pozwalający na przejście przez wybraną talię fiszek.
 
 **Spróbuj sam:** <p align="center">
-[Flaskcardsapp]([https://www.google.com](https://flashcardsapp.up.railway.app/))
+[Flashcards App](https://flashcardsapp.up.railway.app/)
 
 ### 🏭 Struktura Projektu
 ```text
@@ -63,7 +63,7 @@ Project uses CRUD functionality for decks and cards; it also allows users to reg
 ### 🤖 AI Usage and Tutorials
 I used AI (Gemini) during the creation of this project.  
 It assisted me during the creation of this project - hosting included.
-I used [Dannis Ivy's]([https://www.google.com](https://www.youtube.com/watch?v=xv_bwpA_aEA&list=PL-51WBLyFTg2vW-_6XBoUpE7vpmoR3ztO&index=1)) tutorial to understand the core structure of Django.
+I used [Dannis Ivy's]([https://www.youtube.com/watch?v=xv_bwpA_aEA&list=PL-51WBLyFTg2vW-_6XBoUpE7vpmoR3ztO&index=1]) tutorial to understand the core structure of Django.
 
 ### ⚙️ Functions
 1. Account System: Account registration and login with basic Django auth system.
