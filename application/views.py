@@ -196,18 +196,17 @@ def user_register(request):
     form = CreateUser()
 
     if request.method == "POST":
+        form = CreateUser(request.POST)
 
-        if request.session["captcha_answer"] == captcha_script.encrypt_string(
+        if form.is_valid() and request.session[
+            "captcha_answer"
+        ] == captcha_script.encrypt_string(
             request.POST.get("captcha_input", "").strip()
         ):
-            return redirect("login_page")
-        else:
-            form = CreateUser(request.POST)
 
-            if form.is_valid():
-                user_obj = form.save()
-                UserClass.objects.create(user=user_obj)
-                return redirect("login_page")
+            user_obj = form.save()
+            UserClass.objects.create(user=user_obj)
+            return redirect("login_page")
 
     context = {"form": form, "captcha_img": captcha_img}
     return render(request, "application/register.html", context)
