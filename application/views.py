@@ -138,7 +138,7 @@ def learn(request, id_deck, id_card):
 
     try:
         if not request.user.is_authenticated:
-            deck = Deck.objects.get(id=id_deck)
+            deck = Deck.objects.get(id=id_deck, owner__user=None)
         else:
             deck = Deck.objects.get(id=id_deck, owner__user=request.user)
         deck_len = deck.card_set.all().count()  # type: ignore
