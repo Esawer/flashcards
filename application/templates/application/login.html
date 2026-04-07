@@ -2,10 +2,10 @@
 {% block content %}
 
 {% if form.errors %}
-<div class="fixed top-4 left-4 z-50 w-64">
+<div class="fixed top-4 left-4 z-50 w-fit max-w-sm">
     {% for error_list in form.errors.values %}
         {% for error in error_list %}
-            <div class="bg-red-800 text-white text-xs p-3 mb-2 rounded-lg shadow-2xl border border-red-600 opacity-95">
+            <div class="bg-red-800 text-white text-lg p-3 mb-2 rounded-lg shadow-2xl  opacity-90 w-fit">
                 {{ error }}
             </div>
         {% endfor %}
