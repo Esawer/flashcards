@@ -73,7 +73,7 @@ def create_images(str_combination: str):
 
     current_x = 10  # First character starting position.
     for j in range(len(text)):
-        ft = ImageFont.truetype(["arialbd.ttf", "arialbi.ttf"][(random.randint(0, 1))], random.randint(35, 40))
+        ft = ImageFont.truetype(["ARIALBD.TTF", "ARIALBI.TTF"][(random.randint(0, 1))], random.randint(35, 40))
             # Font type and size are randomized.
         draw.text((current_x, random.randint(5, 18)), text[j], fill=color[1], font=ft)
             # The character is drawn with a randomized Y position.
